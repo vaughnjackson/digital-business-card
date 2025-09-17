@@ -10,8 +10,19 @@ load_dotenv()  # Load variables from a local .env file if present
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-only-secret')  # Set SECRET_KEY in environment for production
 
-# Database configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI', 'sqlite:///app.db')
+# Database configuration: prefer DATABASE_URL (Render/Heroku-style), else fallback to SQLALCHEMY_DATABASE_URI or local SQLite
+db_url = os.environ.get('DATABASE_URL')
+if db_url:
+    # Normalize to psycopg3 driver URL so SQLAlchemy uses the modern driver.
+    # Handle both legacy 'postgres://' and standard 'postgresql://' schemes.
+    if db_url.startswith('postgres://'):
+        db_url = db_url.replace('postgres://', 'postgresql+psycopg://', 1)
+    elif db_url.startswith('postgresql://') and not db_url.startswith('postgresql+psycopg://'):
+        db_url = db_url.replace('postgresql://', 'postgresql+psycopg://', 1)
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_url
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI', 'sqlite:///app.db')
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize db and migrations
