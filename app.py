@@ -1,8 +1,12 @@
 from flask import Flask, render_template, redirect, url_for, flash
 from forms import ContactForm
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  # Load variables from a local .env file if present
 
 app = Flask(__name__)
-app.secret_key = 'your-secret-key-here'  # Change this to a random string
+app.secret_key = os.environ.get('SECRET_KEY', 'dev-only-secret')  # Set SECRET_KEY in environment for production
 
 @app.route('/')
 def index():
