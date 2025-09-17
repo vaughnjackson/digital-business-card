@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Your Name{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Your Name" class="profile-image">
+        <h1>Welcome to My Digital Business Card</h1>
+        <h2>Principal UX Consultant & Business Strategist</h2>
+        <p class="hero-description">
+            Helping businesses create exceptional user experiences through strategic design 
+            and innovative solutions. Passionate about AI automation and business development.
+        </p>
+        <div class="cta-buttons">
+            <a href="{{ url_for('about') }}" class="btn btn-primary">Learn More</a>
+            <a href="{{ url_for('contact') }}" class="btn btn-secondary">Get in Touch</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

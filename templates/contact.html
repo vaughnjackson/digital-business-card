@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact - Your Name{% endblock %}
+
+{% block content %}
+<section class="contact-section">
+    <div class="container">
+        <h1>Get in Touch</h1>
+        
+        <div class="contact-content">
+            <div class="contact-info">
+                <h2>Let's Work Together</h2>
+                <p>
+                    I'm always interested in hearing about new projects and opportunities. 
+                    Whether you need UX consulting, business strategy advice, or want to 
+                    discuss AI automation possibilities, I'd love to connect.
+                </p>
+                
+                <div class="contact-details">
+                    <h3>Professional Focus Areas:</h3>
+                    <ul>
+                        <li>UX Consulting & Design Strategy</li>
+                        <li>Business Development & Planning</li>
+                        <li>AI Automation Solutions</li>
+                        <li>Application Redesign Projects</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="contact-form">
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="form-group">
+                        {{ form.name.label(class="form-label") }}
+                        {{ form.name(class="form-control") }}
+                        {% if form.name.errors %}
+                            {% for error in form.name.errors %}
+                                <div class="error">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        {{ form.email.label(class="form-label") }}
+                        {{ form.email(class="form-control") }}
+                        {% if form.email.errors %}
+                            {% for error in form.email.errors %}
+                                <div class="error">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        {{ form.message.label(class="form-label") }}
+                        {{ form.message(class="form-control", rows="5") }}
+                        {% if form.message.errors %}
+                            {% for error in form.message.errors %}
+                                <div class="error">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
